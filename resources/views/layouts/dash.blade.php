@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!--favicon-->
-    <link rel="icon" href="{{asset('dash/img/icon.jpg')}}" type="image/png" />
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/png" />
 
 
 
@@ -52,6 +51,7 @@
     <link rel="stylesheet" href="{{ asset('dash/css/dark-theme-1.css') }}">
     <link rel="stylesheet" href="{{ asset('dash/css/semi-dark-1.css') }}">
     <link rel="stylesheet" href="{{ asset('dash/css/header-colors-1.css') }}">
+    <link href="{{ asset('dash/css/modern.css') }}" rel="stylesheet">
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>

@@ -33,12 +33,20 @@ class OrderController extends Controller
     public function index()
     {
         $products = Product::all();
-        $orders = Order::all();
-         //Display Last Order details
-         $lastId = Order_detail::max('order_id');
-         $order_receipt = Order_detail::where('order_id', $lastId)->get();
+        $orders = Order::with('transactions')->latest()->take(10)->get();
+        $totalOrders = Order::count();
+        $todayOrders = Order::whereDate('created_at', today())->count();
+        $totalRevenue = Transaction::sum('transaction_amount');
+        $totalProducts = Product::count();
+        $order_receipt = collect();
 
-        return view('orders.index', ['products' => $products, 'order' => $orders, 'order_receipt' => $order_receipt]);
+        return view('orders.index', compact('products', 'orders', 'totalOrders', 'todayOrders', 'totalRevenue', 'totalProducts', 'order_receipt'));
+    }
+
+    public function list()
+    {
+        $orders = Order::with('orderDetails.product')->latest()->paginate(15);
+        return view('orders.list', compact('orders'));
     }
 
     /**
@@ -88,23 +96,11 @@ class OrderController extends Controller
             $transaction->balance  = $request->balance;
             $transaction->paid_amount  = $request->paidAmount;
             $transaction->payment_method  = $request->paymentMethod;
-            $transaction->transaction_amount  = $order_details->amount;
+            $transaction->transaction_amount  = $request->total;
             $transaction->transaction_date  = date('Y-m-d');
             $transaction->save(); 
-
-            $products = Product::all();
-            $order_details = Order_detail::where('order_id', $order_id)->get();
-            $orderedBy = Order::where('id', $order_id)->get();
-
-            return view('orders.index', [
-                'products' => $products,
-                'order_details' => $order_details,
-                'customer_order' => $orderedBy,
-            ]);
         });
-        return redirect()->back()->with('success', 'Product Order Successfull');
-
-
+        return redirect()->back()->with('success', 'Product Order Successful');
     }
 
     /**

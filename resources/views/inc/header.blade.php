@@ -4,11 +4,8 @@
     <!--sidebar wrapper -->
     <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
-            <!-- <div>
-                <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-            </div> -->
             <div>
-                <h4 class="logo-text">PMS</h4>
+                <img src="{{ asset('logo.png') }}" class="logo-icon" alt="logo" style="height:40px; width:auto;">
             </div>
             <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
             </div>
@@ -36,7 +33,6 @@
                     </div>
                     <div class="menu-title">POS</div>
                 </a>
-                
             </li>
             <li class="menu-label">INVENTORY</li>
             <li>

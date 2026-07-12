@@ -31,7 +31,7 @@ Route::get('/', function () {
 
 
 Route::get('showuser', [PagesController::class, 'showusers']);
-Route::get('addproduct', [PagesController::class, 'addproduct']);
+Route::get('addproduct', [PagesController::class, 'addproduct'])->name('addproduct');
 Route::get('grid', [PagesController::class, 'grid']);
 
 
@@ -39,6 +39,7 @@ Auth::routes();
 
 Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
+Route::get('orders/list', [App\Http\Controllers\OrderController::class, 'list'])->name('orders.list');
 Route::resource('orders', OrderController::class);
 Route::resource('report', OrderDetailController::class);
 Route::resource('products', ProductController::class);

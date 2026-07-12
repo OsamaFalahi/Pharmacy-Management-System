@@ -27,10 +27,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::paginate(5);
+        $products = Product::paginate(5);
+        $totalProducts = Product::count();
+        $inStockProducts = Product::where('quantity', '>', 0)->count();
+        $lowStockProducts = Product::whereColumn('stock_alert', '>=', 'quantity')->count();
+        $avgPrice = Product::avg('price');
 
-        return view('products.index')->with('products', $product);
-        
+        return view('products.index', compact('products', 'totalProducts', 'inStockProducts', 'lowStockProducts', 'avgPrice'));
     }
 
     /**
